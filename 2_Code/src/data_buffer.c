@@ -21,6 +21,9 @@ void initBuffer(){
 void putVal(uint16_t newValue){
     int bufferindex = 0;
     buffer[bufferindex++] = newValue;
+
+    //might be faster to use % because buffersize is a power of 2, so it uses the AND operand
+    //but both are fine to use
     if (bufferindex > BUFFER_SIZE)
         bufferindex = 0;
 }
