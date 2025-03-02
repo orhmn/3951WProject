@@ -1,6 +1,6 @@
 
-#ifndef XC_HEADER_TEMPLATE_H
-#define	XC_HEADER_TEMPLATE_H
+#ifndef DELAY_H
+#define	DELAY_H
 
 #include <xc.h>
 
