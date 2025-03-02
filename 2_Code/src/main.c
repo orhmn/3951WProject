@@ -36,5 +36,13 @@ void __attribute__((interrupt, auto_psv)) _CNInterrupt(void) {
 
 }
 
+void
+  main(){
+      SPI_INIT();
+      initBuffer();
 
+      while(1);
+
+
+  }
 
