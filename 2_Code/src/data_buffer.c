@@ -4,7 +4,7 @@
 #define BUFFER_SIZE 1024
 #define sample_size 128
 
-volatile uint32_t buffer[BUFFER_SIZE];
+volatile uint16_t buffer[BUFFER_SIZE];
 int bufferindex = 0;
 
 void initBuffer(){
@@ -22,7 +22,7 @@ void putVal(long newValue){
         bufferindex = 0;
 }
 
-uint32_t getAvg(){
+uint16_t getAvg(){
     int i, sum = 0, t=0;
     for (i = 0; i<sample_size; i++) {
         sum += buffer[bufferindex--];
