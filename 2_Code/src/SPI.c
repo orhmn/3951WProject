@@ -9,7 +9,11 @@ SPI_INIT(){
     
     RPINR20bits.SCK1RX = 0;         //Sets RPx to the SCK
     RPINR20bits.SDI1RX = 0;         //Sets RPx to the SPI data input
+
+    //setup a output for the DIN pin
+     RPINR20bits.SDI1tX = 0;         //Sets RPx to the SCK
     
+    TRISBbits.TRISBX = 0;           //this set the SCK pin to an output
     TRISBbits.TRISBX = 0;           //this set the SCK pin to an output
     TRISBbits.TRISBX= 0;            //this sets the SDI pin as an input
    
@@ -33,6 +37,13 @@ SPI_INIT(){
     IEC0bits.SPI1IE = 1;        //transfer complet interrupt
     IFS0bits.SPF1IF = 0;        //event intterrupt flag status
     IPC2bits.SPF1IP = 4;        //priorty 4    
+}
+
+void
+ADC_SETUP(){
+
+
+
 }
 
 uint16_t ADC_read(){
