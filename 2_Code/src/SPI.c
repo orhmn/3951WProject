@@ -51,7 +51,7 @@ uint16_t ADC_read(){
     //we have 2^15 - 1 bits or 32767 values available to us and we know that the strain gauge values range from 0 to 3mv with 100g being at 3mv.
     //so we just have to divide the data value by 2^15 - 1 and multiply by 100 to get the value in grams
 
-    data = (data/32767) * 100;
+    data = (data/32767) * 1000;
 
     return data;  // Return the 16-bit data   
 }
