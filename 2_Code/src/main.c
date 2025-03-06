@@ -47,8 +47,18 @@ void __attribute__((__interrupt__, __auto_psv__)) _T2Interrupt(void) {
 }
 
 void
+setup(){
+    // -- I2C STUFF --
+    I2C2BRG = 0x9D;
+    I2C2CONbits.I2CEN = 1;
+    _I2CSIDL = 0;
+    IFS3bits.MI2C2IF=0
+}
+
+void
   main(){
-      //setup code
+      //setup code\
+      setup();
       SPI_INIT();
       initBuffer();
       ADC_INIT();
