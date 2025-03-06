@@ -56,7 +56,7 @@ uint16_t ADC_read(){
     uint16_t data = 0;
 
     // Wait for pin to go low (data ready)
-    while (PORTBbits.RBx == 1);  // Replace RBx with the pin we decide to use probably based on the pcb design
+    while (PORTBbits.RB6 == 1);  // Replace RBx with the pin we decide to use probably based on the pcb design
 
     // Perform one 16-bit SPI read
     // Dummy write to generate clock because the AD7788 does not have a continuous 
