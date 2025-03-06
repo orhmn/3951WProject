@@ -38,9 +38,10 @@ void __attribute__((interrupt, auto_psv)) _CNInterrupt(void) {
 
 void __attribute__((__interrupt__, __auto_psv__)) _T2Interrupt(void) {
    _T2IF = 0; TMR2 = 0;
-    //This interrupt only serves to allow the ADC to work as intended.
+    //This will create a char array and get the uint32_t avg, and then translate that to a char array to pring to the LCD
     char adStr[20];
-    sprintf(adStr, "%6.4f V", );
+    uint32_t average = getavg();
+    sprintf(adStr, "%lu", average);
     lcd_printStr(adStr);
 }
 
