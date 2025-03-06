@@ -53,7 +53,7 @@ ADC_INIT(){
 
 
 uint16_t ADC_read(){
-    uint16_t data = 0;
+    udouble16_t data = 0;
 
     // Wait for pin to go low (data ready)
     while (PORTBbits.RB6 == 1);  // Replace RBx with the pin we decide to use probably based on the pcb design
@@ -68,7 +68,7 @@ uint16_t ADC_read(){
     //we have 2^15 - 1 bits or 32767 values available to us and we know that the strain gauge values range from 0 to 3mv with 100g being at 3mv.
     //so we just have to divide the data value by 2^15 - 1 and multiply by 100 to get the value in grams
 
-    data = (data/32767) * 1000;
+    data = (2.08E-3)* data + 0.324;
 
     return data;  // Return the 16-bit data   
 }
