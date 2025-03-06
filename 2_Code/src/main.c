@@ -40,6 +40,7 @@ void
   main(){
       SPI_INIT();
       initBuffer();
+      ADC_INIT();
 
       while(1);
 
