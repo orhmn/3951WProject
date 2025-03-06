@@ -6,16 +6,19 @@ SPI_INIT(){
     
     //disable the SPI peripheral so you can change the SCK and ADI pins
     SPI1STATbits.SPIEN = 0;
+    SPI1CON1bits.DSSDO = 0;        //set the SDO pin controlled by module
     
-    RPINR20bits.SCK1RX = 0;         //Sets RPx to the SCK
-    RPINR20bits.SDI1RX = 0;         //Sets RPx to the SPI data input
+    RPINR20bits.SDO1 = 1;            //Sets RPx to SDO1
+    RPINR20bits.SCK1RX = 1;         //Sets RPx to the SCK
+    RPINR20bits.SDI1RX = 1;         //Sets RPx to the SPI data input
 
     //setup a output for the DIN pin
-     RPINR20bits.SDI1tX = 0;         //Sets RPx to the SCK
+     RPINR20bits.SDI1tX = 1;         //Sets RPx to the SCK
     
     TRISBbits.TRISBX = 0;           //this set the SCK pin to an output
     TRISBbits.TRISBX = 0;           //this set the SCK pin to an output
-    TRISBbits.TRISBX= 0;            //this sets the SDI pin as an input
+    TRISBbits.TRISBX= 1;            //this sets the SDI pin as an input
+    TRISBbits.TRISBX= 0;            //this sets the SDO pin as an output
    
     
     
@@ -40,11 +43,17 @@ SPI_INIT(){
 }
 
 void
-ADC_SETUP(){
+ADC_INIT(){
 
-
-
+    //this is the activation for the ADC to be in continuous read mode
+    SPIBUF = 0b0011110;
+    while(!SPI1STATbits.SPIBUF);        //wait until it sends
+    
+    
+    dummy = SPIBUF;
+    while(!SPI1STATbits.SPIBUF);        //read the buffer to clear it
 }
+
 
 uint16_t ADC_read(){
     uint16_t data = 0;
