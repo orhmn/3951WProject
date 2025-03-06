@@ -6,19 +6,16 @@ SPI_INIT(){
     
     //disable the SPI peripheral so you can change the SCK and ADI pins
     SPI1STATbits.SPIEN = 0;
-    SPI1CON1bits.DSSDO = 0;        //set the SDO pin controlled by module
+    SPI1CON1bits.DSSDO = 0;         //set the SDO pin controlled by module
     
-    RPINR20bits.SDO1 = 1;            //Sets RPx to SDO1
-    RPINR20bits.SCK1RX = 1;         //Sets RPx to the SCK
-    RPINR20bits.SDI1RX = 1;         //Sets RPx to the SPI data input
-
-    //setup a output for the DIN pin
-     RPINR20bits.SDI1tX = 1;         //Sets RPx to the SCK
+    RPINR20bits.SCK1R0 = 1;         //Sets RP0 to SCK
+    RPINR20bits.SDI1R6 = 1;         //Sets RP2 to the SPI data input
     
-    TRISBbits.TRISBX = 0;           //this set the SCK pin to an output
-    TRISBbits.TRISBX = 0;           //this set the SCK pin to an output
-    TRISBbits.TRISBX= 1;            //this sets the SDI pin as an input
-    TRISBbits.TRISBX= 0;            //this sets the SDO pin as an output
+    RPOR3bits.RP7R = 7;             //Sets RP1 to the SDO
+    
+    TRISBbits.TRISB0 = 0;           //this set the SCK pin to an output
+    TRISBbits.TRISB6= 1;            //this sets the SDI pin as an input
+    TRISBbits.TRISB7= 0;            //this sets the SDO pin as an output
    
     
     
