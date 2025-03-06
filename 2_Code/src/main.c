@@ -9,6 +9,7 @@
 #include "delay.h"
 #include "SPI.h"
 #include "data_buffer.h"
+#include "LCD.h"
 
 // CW1: FLASH CONFIGURATION WORD 1 (see PIC24 Family Reference Manual 24.1)
 #pragma config ICS = PGx1          // Comm Channel Select (Emulator EMUC1/EMUD1 pins are shared with PGC1/PGD1)
@@ -52,6 +53,8 @@ void
       initBuffer();
       ADC_INIT();
 
+      char test[4] = "test";
+      lcd_printStr(test);
       while(1);
 
 
