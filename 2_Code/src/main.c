@@ -52,7 +52,21 @@ setup(){
     I2C2BRG = 0x9D;
     I2C2CONbits.I2CEN = 1;
     _I2CSIDL = 0;
-    IFS3bits.MI2C2IF=0
+    IFS3bits.MI2C2IF=0    
+    // -- TIMER 2 STUFF -- 
+    T2CON = 0;
+    TMR2 = 0;
+    T2CONbits.TCKPS = 0b10;
+    PR2 = 782;
+    T2CONbits.TON = 1;
+      
+    // -- INTERRUPT ENABLES --
+    IEC0bits.AD1IE = 1;
+    IFS0bits.AD1IF = 0;
+    //ADC Interrupt (Enabled)
+    IEC0bits.T2IE = 1;
+    IFS0bits.T2IF = 0;
+    // T2 Interrupt (Enabled)
 }
 
 void
