@@ -31,7 +31,7 @@ volatile uint16_t data = 0;
 
 void __attribute__((interrupt, auto_psv)) _CNInterrupt(void) {
     IFS1bits.CNIF = 0;  // Clear interrupt flag
-    uint16_t data = ADC_read();  // Read data
+    data = ADC_read();  // Read data
     putVal(data);                // this will put the new value into the array where we will get the avg value after
 
 }
