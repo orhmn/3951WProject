@@ -38,6 +38,7 @@ void __attribute__((interrupt, auto_psv)) _CNInterrupt(void) {
 
 void
   main(){
+      //setup code
       SPI_INIT();
       initBuffer();
       ADC_INIT();
