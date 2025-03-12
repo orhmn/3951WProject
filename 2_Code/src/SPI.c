@@ -8,13 +8,13 @@ SPI_INIT(){
     SPI1STATbits.SPIEN = 0;
     SPI1CON1bits.DSSDO = 0;         //set the SDO pin controlled by module
     
-    RPINR20bits.SCK1R0 = 1;         //Sets RP0 to SCK
-    RPINR20bits.SDI1R6 = 1;         //Sets RP2 to the SPI data input
+    RPINR20bits.SCK1R4 = 1;         //Sets RP0 to SCK
+    RPINR20bits.SDI1R3 = 1;         //Sets RP2 to the SPI data input
     
     RPOR3bits.RP7R = 7;             //Sets RP1 to the SDO
     
-    TRISBbits.TRISB0 = 0;           //this set the SCK pin to an output
-    TRISBbits.TRISB6= 1;            //this sets the SDI pin as an input
+    TRISBbits.TRISB4 = 0;           //this set the SCK pin to an output
+    TRISBbits.TRISB3= 1;            //this sets the SDI pin as an input
     TRISBbits.TRISB7= 0;            //this sets the SDO pin as an output
    
     
