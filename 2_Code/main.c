@@ -6,10 +6,13 @@
  */
 
 #include "xc.h"
-#include "delay.h"
+//#include "delay.h"
 #include "SPI.h"
 #include "data_buffer.h"
 #include "LCD.h"
+#include "string.h"
+#include "stdint.h"
+#include <stdio.h>
 
 // CW1: FLASH CONFIGURATION WORD 1 (see PIC24 Family Reference Manual 24.1)
 #pragma config ICS = PGx1          // Comm Channel Select (Emulator EMUC1/EMUD1 pins are shared with PGC1/PGD1)
@@ -28,7 +31,15 @@
 #pragma config FNOSC = FRCPLL      // Oscillator Select (Fast RC Oscillator with PLL module (FRCPLL))
 
 volatile uint16_t data = 0;
+volatile int length = 0;
+volatile static char ADC_val[20];
 
+void delay_ms(unsigned int ms) {
+    while (ms-- > 0) {
+        asm("repeat #15998");
+        asm("nop");
+    }
+}
 
 void __attribute__((interrupt, auto_psv)) _CNInterrupt(void) {
     IFS1bits.CNIF = 0;  // Clear interrupt flag
@@ -41,46 +52,59 @@ void __attribute__((__interrupt__, __auto_psv__)) _T2Interrupt(void) {
    _T2IF = 0; TMR2 = 0;
     //This will create a char array and get the uint32_t avg, and then translate that to a char array to pring to the LCD
     char adStr[20];
-    uint32_t average = getavg();
-    sprintf(adStr, "%lu", average);
+    double average = getAvg();
+    sprintf(adStr, "%8.4f", average);
     lcd_printStr(adStr);
 }
 
 void
 setup(){
+    _RCDIV = 0;
+    AD1PCFG = 0xffff;
+    for(int i = 0; i < 20; i++)
+    {
+        ADC_val[i] = 0;
+    }
+    
     // -- I2C STUFF --
-    I2C2BRG = 0x9D;
-    I2C2CONbits.I2CEN = 1;
-    _I2CSIDL = 0;
-    IFS3bits.MI2C2IF=0    
+//    I2C2BRG = 0x9D;
+//    I2C2CONbits.I2CEN = 1;
+//    _I2CSIDL = 0;
+//    IFS3bits.MI2C2IF=0;    
     // -- TIMER 2 STUFF -- 
-    T2CON = 0;
-    TMR2 = 0;
-    T2CONbits.TCKPS = 0b10;
-    PR2 = 782;
-    T2CONbits.TON = 1;
-      
-    // -- INTERRUPT ENABLES --
-    IEC0bits.AD1IE = 1;
-    IFS0bits.AD1IF = 0;
-    //ADC Interrupt (Enabled)
-    IEC0bits.T2IE = 1;
-    IFS0bits.T2IF = 0;
+//    T2CON = 0;
+//    TMR2 = 0;
+//    T2CONbits.TCKPS = 0b10;
+//    PR2 = 782;
+//    T2CONbits.TON = 1;
+//      
+////     -- INTERRUPT ENABLES --
+//    IEC0bits.AD1IE = 1;
+//    IFS0bits.AD1IF = 0;
+//    ADC Interrupt (Enabled)
+//    IEC0bits.T2IE = 1;
+//    IFS0bits.T2IF = 0;
     // T2 Interrupt (Enabled)
 }
 
-void
-  main(){
-      //setup code\
-      setup();
-      SPI_INIT();
-      initBuffer();
-      ADC_INIT();
-
-      char test[4] = "test";
-      lcd_printStr(test);
-      while(1);
-
-
-  }
+int  main(){
+    setup();
+    lcd_setup();
+    SPI_INIT();
+    lcd_printStr("ABC");
+    while(1)
+    {
+        while(SPI1STATbits.SPITBF);        //wait until buffer is empty
+        SPI1BUF = 0x01;
+        delay_ms(10);
+    }
+    ADC_INIT();
+//    while(1){
+//        sprintf(ADC_val,"%d", ADC_read());
+//        lcd_printStr(ADC_val);
+//        SPI1BUF = 0;
+//        delay_ms(250);
+//    }
+}
+          
 

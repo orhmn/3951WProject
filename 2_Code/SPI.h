@@ -13,7 +13,7 @@ extern "C" {
 #endif
     void SPI_INIT();
     uint16_t ADC_read();
-
+    void ADC_INIT();
 
 
 #ifdef	__cplusplus

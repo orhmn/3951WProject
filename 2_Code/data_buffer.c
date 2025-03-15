@@ -34,7 +34,7 @@ void putVal(uint16_t newValue){
 //buffer is too big then just reduce sample_size, also do not increase the sample_size above 655 because then the sum value can overflow
 //above 65535
 uint16_t getAvg(){
-    int i, sum = 0, t=0;
+    int i, sum = 0;
     for (i = 0; i<sample_size; i++) {
         sum += buffer[bufferindex--];
         if(bufferindex <= 0){
