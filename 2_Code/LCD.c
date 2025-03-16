@@ -132,12 +132,27 @@ void lcd_setCursor(int row, int column)
  * 
  * @param s the string to be printed
  */
-void lcd_printStr(const char s[])
+void lcd_printStr(char s[])
 {
     for (length = 0; s[length] != '\0'; length++){}
     for (int i = 0; i < length; i++)
     {
         lcd_setCursor(0,i);
+        lcd_printChar(s[i]);
+    }
+}
+
+void lcd_printSPI(char s[])
+{
+    for (int i = 0; i < 8; i++)
+    {
+        lcd_setCursor(0,i);
+        lcd_printChar(s[i]);
+    }
+    
+    for (int i = 8; i < 16; i++)
+    {
+        lcd_setCursor(1,i - 8);
         lcd_printChar(s[i]);
     }
 }

@@ -11,9 +11,10 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
+    void delay_us(unsigned int us);
     void SPI_INIT();
     uint16_t ADC_read();
-    void ADC_INIT();
+    unsigned int ADC_INIT();
 
 
 #ifdef	__cplusplus

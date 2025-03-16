@@ -21,7 +21,8 @@ void lcd_cmd(char Package);
 void lcd_setup(void);
 void lcd_printChar(char package);
 void lcd_setCursor(int row, int column);
-void lcd_printStr(const char s[]);
+void lcd_printStr(char s[]);
+void lcd_printSPI(char s[]);
 #ifdef	__cplusplus
 }
 #endif
