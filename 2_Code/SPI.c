@@ -55,23 +55,16 @@ SPI_INIT(){
     
     SPI1STATbits.SPIROV = 0;
     SPI1STATbits.SPIEN = 1;         //enables the SPI pin 
- 
 }
 
-
-unsigned int ADC_INIT1(){
+unsigned int ADC_INIT(){
 //    //this is the activation for the ADC to be in continuous read mode
-    SPI1BUF = 0b0000000000010000;
+    while(SPI1STATbits.SPITBF);         // wait until buffer is empty
+    SPI1BUF = 0x3C;
     while(!SPI1STATbits.SPIRBF);        // wait until buffer is empty
     return SPI1BUF;                     // clear the buffer by interacting with it 
 }
 
-unsigned int ADC_INIT2()
-{
-    SPI1BUF = 0b0000000000000110;
-    while(!SPI1STATbits.SPIRBF);        // wait until buffer is empty
-    return SPI1BUF;                     // clear the buffer by interacting with it 
-}
 
 //uint16_t ADC_read(){
 //    double data = 0;
